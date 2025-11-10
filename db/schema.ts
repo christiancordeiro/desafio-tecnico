@@ -66,4 +66,11 @@ export const contatoTable = pgTable("contato", {
   nome: text("nome").notNull(),
   empresa: text("empresa").notNull(),
   mensagem: text("mensagem").notNull(),
+  status: text("status")
+    .$type<"PENDENTE" | "APROVADO">()
+    .notNull()
+    .default("PENDENTE"),
+  createdAt: timestamp("created_at").$defaultFn(
+    () => /* @__PURE__ */ new Date(),
+  ),
 });
