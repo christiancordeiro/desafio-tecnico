@@ -18,6 +18,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
 
 interface Contato {
   id: string;
@@ -70,7 +71,22 @@ export default function TableComponent({ contatos }: { contatos: Contato[] }) {
                   )}
                 </TableCell>
                 <TableCell>
-                  <Button variant="outline" className="ml-2">
+                  <Button
+                    variant="outline"
+                    className="ml-2"
+                    onClick={async () => {
+                      const res = await fetch(
+                        `/api/contato/${contato.id}/approve`,
+                        {
+                          method: "POST",
+                        },
+                      );
+                      const data = await res.json();
+                      if (data.success) {
+                        toast.success(`Contato aprovado! Token: ${data.token}`);
+                      }
+                    }}
+                  >
                     Aprovar
                   </Button>
                 </TableCell>

@@ -66,6 +66,9 @@ export const contatoTable = pgTable("contato", {
   nome: text("nome").notNull(),
   empresa: text("empresa").notNull(),
   mensagem: text("mensagem").notNull(),
+  userId: text("user_id").references(() => userTable.id, {
+    onDelete: "cascade",
+  }),
   status: text("status")
     .$type<"PENDENTE" | "APROVADO">()
     .notNull()
