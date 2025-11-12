@@ -1,12 +1,12 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Reunioes from "./components/reunioes";
 import Avisos from "./components/avisos";
-import { MegaphoneIcon, Presentation } from "lucide-react";
+import { MegaphoneIcon, Network, Presentation } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { toast } from "sonner";
 import { headers } from "next/headers";
 import { LogoutButton } from "@/components/commom/LogoutButton";
+import NetworkDashboard from "./components/network";
 
 export default async function Painel() {
   const session = await auth.api.getSession({
@@ -30,6 +30,10 @@ export default async function Painel() {
               <MegaphoneIcon />
               Avisos
             </TabsTrigger>
+            <TabsTrigger value="network">
+              <Network />
+              Network
+            </TabsTrigger>
             <div className="flex w-full justify-center sm:justify-end">
               <LogoutButton />
             </div>
@@ -40,6 +44,9 @@ export default async function Painel() {
           </TabsContent>
           <TabsContent value="avisos" className="w-full">
             <Avisos />
+          </TabsContent>
+          <TabsContent value="network" className="w-full">
+            <NetworkDashboard currentUserId={session.user.id} currentUserName={session.user.name} />
           </TabsContent>
         </Tabs>
       </div>

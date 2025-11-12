@@ -1,4 +1,10 @@
-import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  integer,
+  pgTable,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
 
 export const userTable = pgTable("user", {
   id: text("id").primaryKey(),
@@ -86,4 +92,28 @@ export const avisosTable = pgTable("avisos", {
   createdAt: timestamp("created_at").$defaultFn(
     () => /* @__PURE__ */ new Date(),
   ),
+});
+
+export const indicacoesTable = pgTable("indicacoes", {
+  id: text("id").primaryKey().notNull(),
+  descricao: text("descricao").notNull(),
+  data: timestamp("data").notNull(),
+  status: text("status").$type<"PENDENTE" | "ACEITA" | "RECUSADA">().notNull(),
+
+  // Quem fez a indicação
+  indicadorId: text("indicador_id")
+    .references(() => userTable.id, {
+      onDelete: "cascade",
+    })
+    .notNull(),
+
+  // Quem recebeu a indicação
+  indicadoId: text("indicado_id")
+    .references(() => userTable.id, {
+      onDelete: "cascade",
+    })
+    .notNull(),
+
+  valor: integer("valor").notNull(),
+  createdAt: timestamp("created_at").$defaultFn(() => new Date()),
 });
