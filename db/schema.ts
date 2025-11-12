@@ -77,3 +77,13 @@ export const contatoTable = pgTable("contato", {
     () => /* @__PURE__ */ new Date(),
   ),
 });
+
+export const avisosTable = pgTable("avisos", {
+  id: text("id").primaryKey(),
+  titulo: text("titulo").notNull(),
+  descricao: text("descricao").notNull(),
+  date: timestamp("date").notNull(),
+  createdAt: timestamp("created_at").$defaultFn(
+    () => /* @__PURE__ */ new Date(),
+  ),
+});

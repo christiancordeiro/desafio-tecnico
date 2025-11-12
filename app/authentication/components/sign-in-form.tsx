@@ -49,7 +49,7 @@ export default function SignInForm() {
       password: values.senha,
       fetchOptions: {
         onSuccess: () => {
-          router.push("/user");
+          router.push("/painel");
         },
         onError: (ctx) => {
           if (ctx.error.code === "USER_NOT_FOUND") {
