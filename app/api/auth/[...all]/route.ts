@@ -3,6 +3,4 @@ import { auth } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
-console.log(auth);
-
 export const { GET, POST } = toNextJsHandler(auth.handler);
