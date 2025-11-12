@@ -63,32 +63,38 @@ export default function TableComponent({ contatos }: { contatos: Contato[] }) {
                 </TableCell>
                 <TableCell>
                   {contato.status === "PENDENTE" ? (
-                    <Badge variant="secondary" className="px-3 py-1 text-sm">
-                      Pendente
-                    </Badge>
+                    <Badge className="px-3 py-1 text-sm">Pendente</Badge>
                   ) : (
-                    <Badge>Aprovado</Badge>
+                    <Badge variant="secondary" className="px-3 py-1 text-sm">
+                      Aprovado
+                    </Badge>
                   )}
                 </TableCell>
                 <TableCell>
-                  <Button
-                    variant="outline"
-                    className="ml-2"
-                    onClick={async () => {
-                      const res = await fetch(
-                        `/api/contato/${contato.id}/approve`,
-                        {
-                          method: "POST",
-                        },
-                      );
-                      const data = await res.json();
-                      if (data.success) {
-                        toast.success(`Contato aprovado! Token: ${data.token}`);
-                      }
-                    }}
-                  >
-                    Aprovar
-                  </Button>
+                  {contato.status === "APROVADO" ? (
+                    <span>Usuaário já aprovado</span>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      className="ml-2"
+                      onClick={async () => {
+                        const res = await fetch(
+                          `/api/contato/${contato.id}/approve`,
+                          {
+                            method: "POST",
+                          },
+                        );
+                        const data = await res.json();
+                        if (data.success) {
+                          toast.success(
+                            `Contato aprovado! Token: ${data.token}`,
+                          );
+                        }
+                      }}
+                    >
+                      Aprovar
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
