@@ -34,7 +34,7 @@ export default function NetworkDashboard({
           />
         </CardAction>
       </CardHeader>
-      <CardContent>
+      <CardContent className="min-h-[413px]">
         <Tabs defaultValue="minhasIndicacoes">
           <TabsList>
             <TabsTrigger value="minhasIndicacoes">
